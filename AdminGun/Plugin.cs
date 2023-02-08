@@ -73,14 +73,17 @@
             return true;
         }
 
-        [PluginEvent(ServerEventType.PlayerSearchedPickup)]
+        //[PluginEvent(ServerEventType.PlayerSearchedPickup)]
 		public bool OnSearchedPickup(Player plr, ItemPickupBase pickup)
         {
             if (AdminGunSerials.Contains(pickup.Info.Serial))
             {
                 bool hasPerm = plr.CheckPermission("admingun");
                 if (Config.RestrictPickingUp && !hasPerm)
+                {
+                    pickup.Info.InUse = false;
                     return false;
+                }
                 plr.ReceiveHint(
                     hasPerm
                         ? Config.AuthorizedObtainMessage

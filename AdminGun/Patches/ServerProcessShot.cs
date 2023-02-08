@@ -30,12 +30,12 @@
                     if (hit.collider.TryGetComponent<IDestructible>(out var destructible) && destructible.NetworkId != __instance.Hub.netId)
                     {
                         bool flag = ReferenceHub.TryGetHubNetID(destructible.NetworkId, out var referenceHub);
-                        if (referenceHub.characterClassManager.GodMode)
+                        if (flag && referenceHub.characterClassManager.GodMode)
                             referenceHub.characterClassManager.GodMode = false;
                         float damage = -1f;
                         if (destructible.Damage(damage, new CustomReasonDamageHandler("Deleted", damage, "Deleted"), hit.point))
                         {
-                            if (flag || !referenceHub.playerEffectsController.GetEffect<Invisible>().IsEnabled)
+                            if (!flag || !referenceHub.playerEffectsController.GetEffect<Invisible>().IsEnabled)
                             {
                                 Hitmarker.SendHitmarker(__instance.Conn, 1f);
                             }

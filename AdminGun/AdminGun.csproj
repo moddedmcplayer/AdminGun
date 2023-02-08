@@ -80,6 +80,7 @@
         <Compile Include="Patches\IsFriendlyFire.cs" />
         <Compile Include="Patches\ServerDropItem.cs" />
         <Compile Include="Patches\ServerProcessShot.cs" />
+        <Compile Include="Patches\ValidateAny.cs" />
         <Compile Include="Plugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
