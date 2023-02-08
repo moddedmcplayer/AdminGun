@@ -134,7 +134,7 @@
         {
             if (!Config.FlashLightEnabledExplosiveAmmo)
                 return true;
-            if (isToggled)
+            if (!isToggled)
                 return true;
             if (AdminGunSerials.Contains(item.ItemSerial))
             {

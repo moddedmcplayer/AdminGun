@@ -46,6 +46,26 @@
                     }
                 }
             }
+
+            if (flag && referenceHub.playerStats.TryGetModule<HealthStat>(out var mod))
+            {
+                if (mod.CurValue > 100f)
+                {
+                    num += (mod.CurValue - 100f * 0.3f);
+                }
+
+                if (referenceHub.characterClassManager.GodMode)
+                {
+                    if (mod.CurValue - num > 0f)
+                    {
+                        mod.CurValue -= num;
+                    }
+                    else
+                    {
+                        referenceHub.characterClassManager.GodMode = false;
+                    }
+                }
+            }
             Vector3 force = (1f - magnitude / setts._maxRadius) * (a / magnitude) * setts._rigidbodyBaseForce + Vector3.up * setts._rigidbodyLiftForce;
             if (num > 0f && dest.Damage(num, new ExplosionDamageHandler(attacker, force, num, 50)
                 {
