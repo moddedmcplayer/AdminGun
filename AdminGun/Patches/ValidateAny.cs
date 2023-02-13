@@ -13,7 +13,7 @@
     {
         public static bool Prefix(ItemSearchCompletor __instance, ref bool __result)
         {
-            if (AdminGun.Plugin.AdminGunSerials.Contains(__instance.TargetPickup.Info.Serial))
+            if (AdminGun.Plugin.AdminGunSerials.Contains(__instance.TargetPickup.Info.Serial) || AdminGun.Plugin.FreddySerials.Contains(__instance.TargetPickup.Info.Serial))
             {
                 var plr = Player.Get(__instance.Hub);
                 bool hasPerm = plr.CheckPermission("admingun");

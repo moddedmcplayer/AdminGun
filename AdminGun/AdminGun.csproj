@@ -75,6 +75,8 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Commands\AdminGunCommand.cs" />
+        <Compile Include="Commands\FreddyGunCommand.cs" />
+        <Compile Include="Components\FreddyComponent.cs" />
         <Compile Include="Config.cs" />
         <Compile Include="Patches\ExplodeDestructable.cs" />
         <Compile Include="Patches\IsFriendlyFire.cs" />

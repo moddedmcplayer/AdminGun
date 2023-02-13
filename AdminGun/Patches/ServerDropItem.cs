@@ -9,7 +9,7 @@
     {
         public static bool Prefix(ItemBase __instance, ref ItemPickupBase __result)
         {
-            if (!Plugin.Instance.Config.AllowDropping && Plugin.AdminGunSerials.Contains(__instance.ItemSerial))
+            if (!Plugin.Instance.Config.AllowDropping && (Plugin.AdminGunSerials.Contains(__instance.ItemSerial) || Plugin.FreddySerials.Contains(__instance.ItemSerial)))
             {
                 __result = null;
                 return false;
