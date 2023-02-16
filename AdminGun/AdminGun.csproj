@@ -74,6 +74,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Commands\AdminGunAllCommand.cs" />
         <Compile Include="Commands\AdminGunCommand.cs" />
         <Compile Include="Commands\FreddyGunCommand.cs" />
         <Compile Include="Components\FreddyComponent.cs" />
