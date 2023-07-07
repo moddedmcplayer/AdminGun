@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Footprinting;
     using HarmonyLib;
     using InventorySystem;
     using InventorySystem.Items;
@@ -30,8 +31,8 @@
 
         public static List<ushort> AdminGunSerials = new List<ushort>();
         public static List<ushort> FreddySerials = new List<ushort>();
-        public static ThrowableItem ServerHostGrenade;
-        public static ThrowableItem ServerHostGrenadeVisual;
+        public static ThrowableItem HostGrenade = null;
+        public static List<Footprint> AGFootPrint = new List<Footprint>();
 
         public static object FreddySchematic = null;
         public static bool MerValid = false;
@@ -83,7 +84,7 @@
             }
             catch (Exception e)
             {
-                Log.Debug($"MER integration unavailable: {e}");
+                Log.Debug($"YOU CAN IGNORE THIS: MER integration unavailable: {e}");
             }
             finally
             {
@@ -246,8 +247,7 @@
             CheckMer();
             AdminGunSerials.Clear();
             FreddySerials.Clear();
-            ServerHostGrenade = (ThrowableItem)ReferenceHub._hostHub.inventory.ServerAddItem(ItemType.GrenadeHE);
-            ServerHostGrenadeVisual = (ThrowableItem)ReferenceHub._hostHub.inventory.ServerAddItem(ItemType.GrenadeHE);
+            HostGrenade = Server.Instance.AddItem(ItemType.GrenadeFlash) as ThrowableItem;
         }
 
         [PluginConfig]

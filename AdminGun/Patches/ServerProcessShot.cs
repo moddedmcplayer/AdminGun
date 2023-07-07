@@ -75,26 +75,16 @@
                             else
                             {
                                 var position = hit.point;
-                                ThrownProjectile thrownProjectile =
-                                    Object.Instantiate(Plugin.ServerHostGrenadeVisual.Projectile, position,
-                                        Quaternion.identity);
-                                ((ExplosionGrenade)thrownProjectile)._fuseTime = 0f;
-                                PickupSyncInfo pickupSyncInfo = new PickupSyncInfo(Plugin.ServerHostGrenadeVisual.ItemTypeId,
-                                    position, Quaternion.identity, Plugin.ServerHostGrenadeVisual.Weight,
-                                    Plugin.ServerHostGrenadeVisual.ItemSerial)
+                                var grenade = Object.Instantiate(Plugin.HostGrenade.Projectile, position, Quaternion.identity) as FlashbangGrenade;
+                                int num2 = 0;
+                                foreach (ReferenceHub referenceHub in ReferenceHub.AllHubs)
                                 {
-                                    Locked = true
-                                };
-                                PickupSyncInfo pickupSyncInfo2 = pickupSyncInfo;
-                                thrownProjectile.NetworkInfo = pickupSyncInfo2;
-                                thrownProjectile.PreviousOwner = new Footprint(__instance.Hub);
-                                NetworkServer.Spawn(thrownProjectile.gameObject);
-                                ItemPickupBase itemPickupBase = thrownProjectile;
-                                pickupSyncInfo2 = default;
-                                ItemPickupBase itemPickupBase2 = itemPickupBase;
-                                pickupSyncInfo = default;
-                                itemPickupBase2.InfoReceived(pickupSyncInfo, pickupSyncInfo2);
-                                thrownProjectile.ServerActivate();
+                                    if ((position - referenceHub.transform.position).sqrMagnitude <= num2 && !(referenceHub == __instance.Hub))
+                                    {
+                                        num2++;
+                                        grenade!.ProcessPlayer(referenceHub);
+                                    }
+                                }
                             }
                         }
                     }
@@ -104,26 +94,9 @@
                             firearm.Status.Flags.HasFlagFast(FirearmStatusFlags.FlashlightEnabled))
                         {
                             var position = hit.point;
-                            ThrownProjectile thrownProjectile =
-                                Object.Instantiate(Plugin.ServerHostGrenade.Projectile, position,
-                                    Quaternion.identity);
-                            ((ExplosionGrenade)thrownProjectile)._fuseTime = 0f;
-                            PickupSyncInfo pickupSyncInfo = new PickupSyncInfo(Plugin.ServerHostGrenade.ItemTypeId,
-                                position, Quaternion.identity, Plugin.ServerHostGrenade.Weight,
-                                Plugin.ServerHostGrenade.ItemSerial)
-                            {
-                                Locked = true
-                            };
-                            PickupSyncInfo pickupSyncInfo2 = pickupSyncInfo;
-                            thrownProjectile.NetworkInfo = pickupSyncInfo2;
-                            thrownProjectile.PreviousOwner = new Footprint(__instance.Hub);
-                            NetworkServer.Spawn(thrownProjectile.gameObject);
-                            ItemPickupBase itemPickupBase = thrownProjectile;
-                            pickupSyncInfo2 = default;
-                            ItemPickupBase itemPickupBase2 = itemPickupBase;
-                            pickupSyncInfo = default;
-                            itemPickupBase2.InfoReceived(pickupSyncInfo, pickupSyncInfo2);
-                            thrownProjectile.ServerActivate();
+                            InventoryItemLoader.TryGetItem<ThrowableItem>(ItemType.GrenadeHE, out var throwableItem);
+                            var explosionGrenade = throwableItem.Projectile as ExplosionGrenade;
+                            ExplosionGrenade.Explode(new Footprint(__instance.Hub), position, explosionGrenade);
                         }
                     }
                 }

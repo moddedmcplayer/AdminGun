@@ -14,10 +14,8 @@
     {
         public static bool Prefix(ExplosionGrenade __instance, ref bool __result, IDestructible dest, Footprint attacker, Vector3 pos, ExplosionGrenade setts)
         {
-            if (setts.Info.Serial == Plugin.ServerHostGrenadeVisual.ItemSerial)
+            if (!Plugin.AGFootPrint.Contains(attacker))
                 return false;
-            if (setts.Info.Serial != Plugin.ServerHostGrenade.ItemSerial)
-                return true;
             if (Physics.Linecast(dest.CenterOfMass, pos, MicroHIDItem.WallMask))
             {
                 __result = false;
@@ -87,7 +85,6 @@
                 {
                     Hitmarker.SendHitmarker(attacker.Hub, 1f);
                 }
-                referenceHub.inventory.connectionToClient.Send(new GunHitMessage(false, num, pos), 0);
             }
             __result = true;
 
